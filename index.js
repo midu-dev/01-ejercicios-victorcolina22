@@ -52,9 +52,9 @@ async function readFileAndCount(word, callback) {
     return callback(err, wordCounter);
   });
 }
-// readFileAndCount(content, (err, text) => {
+// readFileAndCount(content, (err, count) => {
 //   if (err) console.log(err);
-//   console.log(text);
+//   console.log(count);
 // });
 
 module.exports = {
