@@ -1,6 +1,7 @@
 const { existsSync } = require("node:fs");
 const { mkdir } = require("node:fs/promises");
 const { readFile } = require("node:fs");
+const { dirname } = require('path')
 
 // Utils
 const { createFile } = require("./utils/createFile");
@@ -10,14 +11,14 @@ const content = process.argv[3] ?? "";
 
 // Ejercicio 2
 async function writeFile(filePath, data, callback) {
-  const pathArr = filePath.split("/");
-  const folder = pathArr.slice(0, pathArr.length - 1).join("/");
-  const isRootPath = pathArr.length <= 2;
+  const path = dirname(filePath)
+  const isRootPath = filePath === '.'
 
   if (isRootPath) return createFile(filePath, data, callback);
 
-  if (!existsSync(filePath)) {
-    await mkdir(folder, { recursive: true })
+  if (!existsSync(path)) {
+
+    await mkdir(path, { recursive: true })
       .then((text) => {
         console.log(`Se creó la ruta ${text}`);
       })
@@ -30,9 +31,6 @@ async function writeFile(filePath, data, callback) {
     return;
   }
 }
-// writeFile(path, content, () => {
-//   console.log("Archivo creado con éxito");
-// });
 
 // Ejercicio 3
 async function readFileAndCount(word, callback) {
